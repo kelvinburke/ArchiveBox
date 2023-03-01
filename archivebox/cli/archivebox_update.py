@@ -57,6 +57,12 @@ def main(args: Optional[List[str]]=None, stdin: Optional[IO]=None, pwd: Optional
         help='Ignore existing archived content and overwrite with new versions (DANGEROUS)',
     )
     parser.add_argument(
+        "--resnapshot",
+        default=False,
+        action="store_true",
+        help="Re-archive URLs from scratch, creating a new snapshot timestamped with the current time"
+    )
+    parser.add_argument(
         '--before', #'-b',
         type=float,
         help="Update only links bookmarked before the given timestamp.",
@@ -121,6 +127,7 @@ def main(args: Optional[List[str]]=None, stdin: Optional[IO]=None, pwd: Optional
         only_new=command.only_new,
         index_only=command.index_only,
         overwrite=command.overwrite,
+        resnapshot=command.resnapshot,
         filter_patterns_str=filter_patterns_str,
         filter_patterns=command.filter_patterns,
         filter_type=command.filter_type,

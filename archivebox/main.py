@@ -767,6 +767,7 @@ def update(resume: Optional[float]=None,
            only_new: bool=ONLY_NEW,
            index_only: bool=False,
            overwrite: bool=False,
+           resnapshot: bool=False,
            filter_patterns_str: Optional[str]=None,
            filter_patterns: Optional[List[str]]=None,
            filter_type: Optional[str]=None,
@@ -806,6 +807,8 @@ def update(resume: Optional[float]=None,
         
     # Step 2: Run the archive methods for each link
     to_archive = new_links if only_new else all_links
+    if resnapshot:
+        to_archive = add_timestamp_to_links(to_archive, datetime.now(timezone.utc).isoformat('T', 'seconds'))
     if resume:
         to_archive = [
             link for link in to_archive
