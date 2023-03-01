@@ -3,6 +3,8 @@
 DATA_DIR="${DATA_DIR:-/data}"
 ARCHIVEBOX_USER="${ARCHIVEBOX_USER:-archivebox}"
 
+# start cron so that any scheduled tasks will run
+cron
 
 # Set the archivebox user UID & GID
 if [[ -n "$PUID" && "$PUID" != 0 ]]; then
