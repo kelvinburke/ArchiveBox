@@ -808,6 +808,7 @@ def update(resume: Optional[float]=None,
     # Step 2: Run the archive methods for each link
     to_archive = new_links if only_new else all_links
     if resnapshot:
+        print('Resnapshotting from update')
         to_archive = add_timestamp_to_links(to_archive, datetime.now(timezone.utc).isoformat('T', 'seconds'))
     if resume:
         to_archive = [
@@ -824,7 +825,7 @@ def update(resume: Optional[float]=None,
     }
     if extractors:
         archive_kwargs["methods"] = extractors
-
+    print(f'Updating: {[link.url for link in to_archive]}')
     archive_links(to_archive, overwrite=overwrite, **archive_kwargs)
 
     # Step 4: Re-write links index with updated titles, icons, and resources
