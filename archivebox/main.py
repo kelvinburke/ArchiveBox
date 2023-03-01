@@ -1210,7 +1210,7 @@ def schedule(add: bool=False,
             raise SystemExit(1)
 
         cron = dedupe_cron_jobs(cron)
-        cron.write()
+        if not foreground: cron.write()
 
         total_runs = sum(j.frequency_per_year() for j in cron)
         existing_jobs = list(cron.find_comment(CRON_COMMENT))
@@ -1235,7 +1235,7 @@ def schedule(add: bool=False,
             stderr('        archivebox schedule --every=[timeperiod] --depth=1 https://example.com/some/rss/feed.xml')
         raise SystemExit(0)
 
-    cron = CronTab(user=True)
+    # cron = CronTab(user=True)
     cron = dedupe_cron_jobs(cron)
     existing_jobs = list(cron.find_comment(CRON_COMMENT))
 
