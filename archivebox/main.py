@@ -1268,7 +1268,7 @@ def schedule(add: bool=False,
             for unit in units:
                 div = delta / timedelta(**{unit: 1})
                 if div >= 1 or unit == units[-1]:
-                    print('{green}[*] The first job is scheduled to run run in {:.2f} {}{reset}'.format(div, unit, **ANSI))
+                    print('{green}[*] The first job is scheduled to run in {:.2f} {}{reset}'.format(div, unit, **ANSI))
                     return
 
         if len(cron):
