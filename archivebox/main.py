@@ -1264,11 +1264,12 @@ def schedule(add: bool=False,
 
         def print_time_until(job):
             delta = time_until(job)
-            units = ['weeks', 'days', 'hours', 'minutes']
+            units = ['weeks', 'days', 'hours', 'minutes','seconds']
             for unit in units:
                 div = delta / timedelta(**{unit: 1})
-                if div >= 1:
+                if div >= 1 or unit == units[-1]:
                     print('{green}[*] The first job is scheduled to run run in {:.2f} {}{reset}'.format(div, unit, **ANSI))
+                    return
 
         if len(cron):
             first_job = sorted(cron,key=time_until)[0]
