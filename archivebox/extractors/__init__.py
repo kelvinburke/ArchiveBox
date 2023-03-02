@@ -109,6 +109,7 @@ def archive_link(link: Link, overwrite: bool=False, methods: Optional[Iterable[s
                     log_archive_method_started(method_name)
 
                     result = method_function(link=link, out_dir=out_dir)
+                    print(f'DEBUG: method_name: {method_name}, result: {result}, result.__dict__:\n {result.__dict__}')
 
                     link.history[method_name].append(result)
 
