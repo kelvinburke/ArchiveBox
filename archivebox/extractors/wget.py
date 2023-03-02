@@ -76,7 +76,7 @@ def save_wget(link: Link, out_dir: Optional[Path]=None, timeout: int=TIMEOUT) ->
     timer = TimedProgress(timeout, prefix='      ')
     try:
         result = run(cmd, cwd=str(out_dir), timeout=timeout)
-        output = wget_output_path(link)
+        output = wget_output_path(link) if SAVE_WGET else Path(link.link_dir) / 'warc/'
 
         # parse out number of files downloaded from last line of stderr:
         #  "Downloaded: 76 files, 4.0M in 1.6s (2.52 MB/s)"
