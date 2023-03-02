@@ -124,7 +124,7 @@ def snapshot_icons(snapshot) -> str:
         from core.models import EXTRACTORS
         # start = datetime.now(timezone.utc)
 
-        archive_results = snapshot.archiveresult_set.filter(status="succeeded", output__isnull=False)
+        archive_results = snapshot.archiveresult_set.filter(status="succeeded",)# output__isnull=False)
         link = snapshot.as_link()
         path = link.archive_path
         canon = link.canonical_outputs()
