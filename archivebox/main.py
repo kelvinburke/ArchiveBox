@@ -813,6 +813,8 @@ def update(resume: Optional[float]=None,
         to_archive = add_timestamp_to_links(to_archive, timestamp.isoformat('T', 'seconds'))
         to_archive = [Link(url=link.url,
                            timestamp=str(timestamp.timestamp()),
+                           title=link.title,
+                           tags=link.tags,
                            sources=['update --resnapshot', *link.sources]) for link in to_archive]
     if resume:
         to_archive = [
