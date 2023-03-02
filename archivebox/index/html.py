@@ -149,6 +149,7 @@ def snapshot_icons(snapshot) -> str:
         extractor_outputs = defaultdict(lambda: None)
         for extractor, _ in EXTRACTORS:
             for result in archive_results:
+                print('$%&@',result)
                 if result.extractor == extractor and result:
                     extractor_outputs[extractor] = result
 
