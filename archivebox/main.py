@@ -6,7 +6,7 @@ import shutil
 import platform
 from django.utils import timezone
 from pathlib import Path
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 from typing import Dict, List, Optional, Iterable, IO, Union
 from crontab import CronTab, CronSlices
@@ -1266,7 +1266,7 @@ def schedule(add: bool=False,
             delta = time_until(job)
             units = ['weeks', 'days', 'hours', 'minutes']
             for unit in units:
-                div = delta / datetime.timedelta(**{unit: 1})
+                div = delta / timedelta(**{unit: 1})
                 if div >= 1:
                     print('{green}[*] The first job is scheduled to run run in {:.2f} {}{reset}'.format(div, unit, **ANSI))
 
