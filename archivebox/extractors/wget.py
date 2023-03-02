@@ -40,7 +40,7 @@ def should_save_wget(link: Link, out_dir: Optional[Path]=None, overwrite: Option
     if not overwrite and output_path and (out_dir / output_path).exists():
         return False
 
-    return SAVE_WGET
+    return SAVE_WGET or SAVE_WARC
 
 
 @enforce_types
@@ -67,6 +67,7 @@ def save_wget(link: Link, out_dir: Optional[Path]=None, timeout: int=TIMEOUT) ->
         *(['--load-cookies', str(COOKIES_FILE)] if COOKIES_FILE else []),
         *(['--compression=auto'] if WGET_AUTO_COMPRESSION else []),
         *([] if SAVE_WARC else ['--timestamping']),
+        *([] if SAVE_WGET else ['--delete-after', '--no-directories']),
         *([] if CHECK_SSL_VALIDITY else ['--no-check-certificate', '--no-hsts']),
         link.url,
     ]
@@ -103,8 +104,10 @@ def save_wget(link: Link, out_dir: Optional[Path]=None, timeout: int=TIMEOUT) ->
             if b'ERROR 500: Internal Server Error' in result.stderr:
                 raise ArchiveError('500 Internal Server Error', hints)
             raise ArchiveError('Wget failed or got an error from the server', hints)
-        
-        if (out_dir / output).exists():
+
+        if not SAVE_WGET:
+            pass # Not saving wget so don't have to check the directory exists
+        elif (out_dir / output).exists():
             chmod_file(output, cwd=str(out_dir))
         else:
             print(f'          {out_dir}/{output}')
