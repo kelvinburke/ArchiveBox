@@ -109,17 +109,16 @@ def archive_link(link: Link, overwrite: bool=False, methods: Optional[Iterable[s
                     log_archive_method_started(method_name)
 
                     result = method_function(link=link, out_dir=out_dir)
-                    print(f'DEBUG: method_name: {method_name}, result: {result}, result.__dict__:\n {result.__dict__}')
 
                     link.history[method_name].append(result)
 
                     stats[result.status] += 1
                     log_archive_method_finished(result)
                     write_search_index(link=link, texts=result.index_texts)
-                    archiveres = ArchiveResult.objects.create(snapshot=snapshot, extractor=method_name, cmd=result.cmd, cmd_version=result.cmd_version,
+                    ArchiveResult.objects.create(snapshot=snapshot, extractor=method_name, cmd=result.cmd, cmd_version=result.cmd_version,
                                                  output=result.output, pwd=result.pwd, start_ts=result.start_ts, end_ts=result.end_ts, status=result.status)
 
-                    print(f'#$%^ DEBUG archiveres {archiveres}')
+
                     # bump the updated time on the main Snapshot here, this is critical
                     # to be able to cache summaries of the ArchiveResults for a given
                     # snapshot without having to load all the results from the DB each time.

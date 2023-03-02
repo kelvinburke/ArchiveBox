@@ -124,7 +124,7 @@ def snapshot_icons(snapshot) -> str:
         from core.models import EXTRACTORS
         # start = datetime.now(timezone.utc)
 
-        archive_results = snapshot.archiveresult_set.filter()# output__isnull=False)
+        archive_results = snapshot.archiveresult_set.filter(status="succeeded", output__isnull=False)
         link = snapshot.as_link()
         path = link.archive_path
         canon = link.canonical_outputs()
@@ -145,11 +145,10 @@ def snapshot_icons(snapshot) -> str:
         }
         exclude = ["favicon", "title", "headers", "archive_org"]
         # Missing specific entry for WARC
-        for result in archive_results:
-            print('$%&@', result, result.extractor, '\n',result.__dict__)
 
         extractor_outputs = defaultdict(lambda: None)
         for extractor, _ in EXTRACTORS:
+            for result in archive_results:
                 if result.extractor == extractor and result:
                     extractor_outputs[extractor] = result
 
@@ -170,7 +169,6 @@ def snapshot_icons(snapshot) -> str:
                 
                 # get from db (faster but less thurthful)
                 exists = extractor_outputs[extractor] and extractor_outputs[extractor].status == 'succeeded' # and extractor_outputs[extractor].output, don't need wget output necessarily for warc
-                print(f'DEBUG: exists {exists}, extractor_outputs[extractor] {extractor_outputs[extractor]}, extractor_outputs[extractor].status {extractor_outputs[extractor].status if extractor_outputs[extractor] is not None else None}')
                 # get from filesystem (slower but more accurate)
                 # exists = list((Path(path) / canon["warc_path"]).glob("*.warc.gz"))
                 output += format_html(output_template, path, canon["warc_path"], str(bool(exists)), "warc", icons.get("warc", "?"))
