@@ -169,6 +169,7 @@ def snapshot_icons(snapshot) -> str:
                 
                 # get from db (faster but less thurthful)
                 exists = extractor_outputs[extractor] and extractor_outputs[extractor].status == 'succeeded' # and extractor_outputs[extractor].output, don't need wget output necessarily for warc
+                print(f'DEBUG: exists {exists}, extractor_outputs[extractor] {extractor_outputs[extractor]}, extractor_outputs[extractor].status {extractor_outputs[extractor].status}')
                 # get from filesystem (slower but more accurate)
                 # exists = list((Path(path) / canon["warc_path"]).glob("*.warc.gz"))
                 output += format_html(output_template, path, canon["warc_path"], str(bool(exists)), "warc", icons.get("warc", "?"))
