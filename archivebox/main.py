@@ -1260,7 +1260,7 @@ def schedule(add: bool=False,
 
         def time_until(job):
             now = datetime.now()
-            return job.schedule(date_from=now) - now
+            return job.schedule(date_from=now).get_next() - now
 
         def print_time_until(job):
             delta = time_until(job)
