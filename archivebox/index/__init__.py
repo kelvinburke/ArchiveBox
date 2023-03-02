@@ -140,7 +140,7 @@ def add_timestamp_to_links(links: Iterable[Link], timestamp: Optional[str]=None)
         timestamp = datetime.now(timezone.utc).isoformat('T', 'seconds')
 
     links = [link.overwrite(url=link.url.split('#')[0] + f'#{timestamp}') for link in links]
-
+    links = list(dict.fromkeys(links).keys()) # De-duplicate
     return links
 
 @enforce_types
