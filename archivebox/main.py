@@ -1272,7 +1272,7 @@ def schedule(add: bool=False,
                                                                                                         **ANSI))
 
         if len(cron):
-            first_job = sorted(cron,key=timeuntil)[0]
+            first_job = sorted(cron,key=time_until)[0]
             print_time_until(first_job)
 
         if run_all:
