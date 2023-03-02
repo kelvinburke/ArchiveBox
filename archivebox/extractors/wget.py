@@ -94,7 +94,7 @@ def save_wget(link: Link, out_dir: Optional[Path]=None, timeout: int=TIMEOUT) ->
             'Got wget response code: {}.'.format(result.returncode),
             *output_tail,
         )
-        print(f'WGET: result {result}, output: {output}, result.returncode {result.returncode}, files_downloaded {files_downloaded}')
+
         # Check for common failure cases
         if (result.returncode > 0 and files_downloaded < 1) or (output is None and SAVE_WGET):
             if b'403: Forbidden' in result.stderr:
