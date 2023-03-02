@@ -146,7 +146,7 @@ def snapshot_icons(snapshot) -> str:
         exclude = ["favicon", "title", "headers", "archive_org"]
         # Missing specific entry for WARC
         for result in archive_results:
-            print('$%&@', result, result.extractor, result.succeeded, '\n',result.__dict__)
+            print('$%&@', result, result.extractor, '\n',result.__dict__)
 
         extractor_outputs = defaultdict(lambda: None)
         for extractor, _ in EXTRACTORS:
