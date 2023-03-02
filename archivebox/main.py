@@ -809,7 +809,11 @@ def update(resume: Optional[float]=None,
     to_archive = new_links if only_new else all_links
     if resnapshot:
         print('Resnapshotting from update')
-        to_archive = add_timestamp_to_links(to_archive, datetime.now(timezone.utc).isoformat('T', 'seconds'))
+        timestamp = datetime.now(timezone.utc)
+        to_archive = add_timestamp_to_links(to_archive, timestamp.isoformat('T', 'seconds'))
+        to_archive = [Link(url=link.url,
+                           timestamp=str(timestamp.timestamp()),
+                           sources=['update --resnapshot', *link.sources]) for link in to_archive]
     if resume:
         to_archive = [
             link for link in to_archive
