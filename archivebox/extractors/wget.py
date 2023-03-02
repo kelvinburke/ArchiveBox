@@ -96,7 +96,7 @@ def save_wget(link: Link, out_dir: Optional[Path]=None, timeout: int=TIMEOUT) ->
         )
 
         # Check for common failure cases
-        if (result.returncode > 0 and files_downloaded < 1) or output is None:
+        if (result.returncode > 0 and files_downloaded < 1) or (output is None and SAVE_WGET):
             if b'403: Forbidden' in result.stderr:
                 raise ArchiveError('403 Forbidden (try changing WGET_USER_AGENT)', hints)
             if b'404: Not Found' in result.stderr:
