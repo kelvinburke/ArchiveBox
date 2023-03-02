@@ -119,7 +119,7 @@ def archive_link(link: Link, overwrite: bool=False, methods: Optional[Iterable[s
                     archiveres = ArchiveResult.objects.create(snapshot=snapshot, extractor=method_name, cmd=result.cmd, cmd_version=result.cmd_version,
                                                  output=result.output, pwd=result.pwd, start_ts=result.start_ts, end_ts=result.end_ts, status=result.status)
 
-                    print('#$%^ DEBUG archiveres {archiveres}')
+                    print(f'#$%^ DEBUG archiveres {archiveres}')
                     # bump the updated time on the main Snapshot here, this is critical
                     # to be able to cache summaries of the ArchiveResults for a given
                     # snapshot without having to load all the results from the DB each time.
