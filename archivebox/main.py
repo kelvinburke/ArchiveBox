@@ -1256,6 +1256,25 @@ def schedule(add: bool=False,
             raise SystemExit(1)
 
         print('{green}[*] Running {} ArchiveBox jobs in foreground task scheduler...{reset}'.format(len(existing_jobs), **ANSI))
+        schedule = cron
+
+        def time_until(job):
+            now = datetime.now()
+            return job.schedule(date_from=now) - now
+
+        def print_time_until(job):
+            delta = time_until(job)
+            units = ['weeks', 'days', 'hours', 'minutes']
+            for unit in units:
+                div = diff / datetime.timedelta(**{unit: 1})
+                if div >= 1:
+                    print('{green}[*] The first job is scheduled to run run in {:.2f} {}{reset}'.format(div, unit,
+                                                                                                        **ANSI))
+
+        if len(cron):
+            first_job = sorted(cron,key=timeuntil)[0]
+            print_time_until(first_job)
+
         if run_all:
             try:
                 for job in existing_jobs:
